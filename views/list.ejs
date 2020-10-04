@@ -1,0 +1,287 @@
+<%- include("header") -%>
+
+<!-- list starts -->
+<div style="background-image: url('../images/img.jpg'); padding: 30px;">
+
+  <div class="row">
+    <div class="col-lg-4" id="heading" >
+    <h1 style="font-size: 30px;"> <%= userName %> </h1>
+  </div>
+
+  <div class="col-lg-4" id="heading" >
+    <h1>TO DO LIST WEB-APP</h1>
+    <!-- <a class="btn btn-dark btn-lg" href="/logout" role="button">Log out</a> -->
+  </div>
+
+  <div class="col-lg-4" id="heading">
+    <% if(userName===""){%>
+      <a class="btn btn-light btn-lg" href="/register" role="button">Register</a>
+      <a class="btn btn-dark btn-lg" href="/login" role="button">Login</a>
+    <%}else{ %>
+      <a class="btn btn-dark btn-lg" href="/lg" role="button">Logout</a>
+    <% }%>
+  </div>
+  </div>
+  
+  <div class="row">
+
+    <!-- box 1st -->
+
+      <div class=" col-lg-4 innerbox">
+        <div class="box" id="heading">
+          <h1>Search task</h1>
+        </div>
+        <div class="infobox box">
+          <!-- new search form -->
+
+          <form action="/Search" method="POST" style="padding: 5px;opacity: 0.9;">
+            <div class="form-group">
+              <input
+                class="form-control"
+                type="date"
+                name="date"
+                placeholder="Due Date"
+              />
+            </div>
+            <div class="form-group" >
+              <select name="newList" id="cars" style="width:80%;height: 40px;">
+                <option value="Personal">Personal</option>
+                <option value="Work">Work</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Others">Others</option>
+              </select>
+              </div>
+    
+            <div class="form-group">
+              <button class="btn btn-lg btn-primary btn-block">Search</button>
+            </div>
+          </form>
+
+        </div>
+        <h5 style="text-align: left;margin-bottom: 0;padding-bottom: 0;">Search result</h5>
+        <div class="box">
+
+        <% var i=0; newListItems.forEach(function(item){ %>
+
+          <%if(item.date===date_s && item.category===category_s ){ i=1;%>
+            
+              <div class="item">
+                <p style="width: 120%;text-align: left;font-size: 1.1em;"><%=item.task%></p>
+                <%if(item.category==="Personal"){%>
+
+                  <div  style="width: 100%;" >
+                    <p style="font-size:0.85em"><i alt="Personal" title="Personal" class="fas fa-user-tag"></i> <%=item.date%></p>
+                  </div>
+
+                <%}%>
+                <%if(item.category==="Work"){ %>
+
+                  <div style="width: 100%;">
+                    <p style="font-size:0.85em"><i title="Work" class="far fa-building"></i><%=item.date%></p>
+                  </div>
+                
+                <%}%>
+                <%if(item.category==="Shopping"){%>
+
+                  <div  style="width: 100%;">
+                    <p style="font-size:0.85em"><i title="Shopping"class="fas fa-shopping-bag"></i><%=item.date%></p>
+                  </div>
+
+                <%}%>
+                <%if(item.category==="Others"){%>
+
+                  <div  style="width: 100%;">
+                    <p style="font-size:0.85em"><i title="Others" class="fab fa-algolia"></i> <%=item.date%></p>
+                  </div>
+
+                <%}%>
+              </div>
+              <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+          <%}%>
+        <%  }) %>
+        <%if(i===0){%>
+          <div class="item">
+            <p style="width: 120%;text-align: left;font-size: 1.1em;">No Task Found</p> 
+          </div>
+        <%}%>
+        </div>
+
+      </div>
+
+      <!-- box second -->
+
+        <div class=" col-lg-4 innerbox">
+        
+        <div class="box" id="heading">
+        <h1> <%= listTitle %> </h1>
+        </div>
+      
+        <h5 style="text-align: left;margin-bottom: 0;padding-bottom: 0;">Ongoing</h5>
+        <div class="box">
+
+        <% var i=0; newListItems.forEach(function(item){ %>
+
+          <%if(item.date<=today){ i=1;%>
+            <form action="/delete" method="post">
+              <div class="item">
+                <input type="checkbox" name="checkbox" value="<%=item._id%>" onChange="this.form.submit()">
+                <p style="width: 120%;text-align: left;font-size: 1.1em;"><%=item.task%></p> 
+    
+                <%if(item.category==="Personal"){%>
+                  
+                  <div  style="width: 100%;" >
+                    <p style="font-size:0.85em"><i alt="Personal" title="Personal" class="fas fa-user-tag"></i> <%=item.date%></p>
+                  </div>
+                <%}%>
+                <%if(item.category==="Shopping"){%>
+                  <!-- <p style="width: 120%;text-align: left;"><%=item.task%> </p>  -->
+                  <div  style="width: 100%;">
+                    <p style="font-size:0.85em">     
+                      <i title="Shopping"class="fas fa-shopping-bag"></i>
+                        <%=item.date%></p>
+                  </div>
+                  
+                <%}%>
+                <%if(item.category==="Work"){%>
+                  <!-- <p style="width: 120%;text-align: left;"><%=item.task%> </p> -->
+                  <div style="width: 100%;">
+                    <p style="font-size:0.85em">     
+                      <i title="Work" class="far fa-building"></i>
+                      <%=item.date%></p>
+                  </div>
+                 
+                <%}%>
+                <%if(item.category==="Others"){%>
+                  <!-- <p style="width: 120%;text-align: left;"><%=item.task%></p>  -->
+                  <div  style="width: 100%;">
+                    <p style="font-size:0.85em"><i title="Others" class="fab fa-algolia"></i> <%=item.date%></p>
+    
+                  </div>
+                <%}%>
+              </div>
+              <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+            </form>
+            <%}%>
+
+     
+        <%  }) %>
+        <%if(i===0){%>
+          <div class="item">
+            <p style="width: 120%;text-align: left;font-size: 1.1em;">No Task Found</p> 
+          </div>
+        <%}%>
+        </div>
+
+        <!-- upcomming list -->
+        <h5 style="text-align: left;padding: 0;" >Upcoming</h6>
+
+        <div class="box">
+          
+          <% var i=0; newListItems.forEach(function(item){ %>
+              <%if(item.date>today){ i=1;%>
+              
+              <form action="/delete" method="post">
+                <div class="item">
+                  <input type="checkbox" name="checkbox" value="<%=item._id%>" onChange="this.form.submit()">
+                  <p style="width: 120%;text-align: left;font-size: 1.1em;"><%=item.task%></p> 
+      
+                  <%if(item.category==="Personal"){%>
+                    
+                    <div  style="width: 100%;" >
+                      <p style="font-size:0.85em"><i alt="Personal" title="Personal" class="fas fa-user-tag"></i> <%=item.date%></p>
+                    </div>
+                  <%}%>
+                  <%if(item.category==="Shopping"){%>
+                    <div  style="width: 100%;">
+                      <p style="font-size:0.85em">     
+                        <i title="Shopping"class="fas fa-shopping-bag"></i>
+                          <%=item.date%></p>
+                    </div>
+                    
+                  <%}%>
+                  <%if(item.category==="Work"){%>
+                    <div style="width: 100%;">
+                      <p style="font-size:0.85em">     
+                        <i title="Work" class="far fa-building"></i>
+                        <%=item.date%></p>
+                    </div>
+                   
+                  <%}%>
+                  <%if(item.category==="Others"){%>
+                    <div  style="width: 100%;">
+                      <p style="font-size:0.85em"><i title="Others" class="fab fa-algolia"></i> <%=item.date%></p>
+      
+                    </div>
+                  <%}%>
+                  
+                  
+                </div>
+                <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+              </form>
+              <%}%>
+
+            
+    
+          <%})%>
+          <%if(i===0){%>
+            <div class="item">
+              <p style="width: 120%;text-align: left;font-size: 1.1em;">No Task Found</p> 
+            </div>
+          <%}%>
+      </div>
+
+      </div>
+
+      <!-- box third -->
+
+      <div class=" col-lg-4 innerbox">
+        
+        <div class="box" id="heading">
+        <h1> Add a New Task </h1>
+        </div>
+
+        <div class="box">
+        <form action="/category" method="POST" style="padding: 5px;opacity: 0.9;">
+          <div class="form-group" >
+            <input 
+              class="form-control"
+              type="text"
+              name="task"
+              placeholder="Add Task"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="date"
+              name="duedate"
+              placeholder="Due Date"
+              
+            />
+          </div>
+          <div class="form-group" >
+            <select name="newList" id="cars" style="width:80%;height: 40px;">
+              <option value="Personal">Personal</option>
+              <option value="Work">Work</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Others">Others</option>
+            </select>
+            </div>
+  
+          <div class="form-group">
+            <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+          </div>
+        </form>
+        </div>
+
+      <!--   <div class="box" id="heading">
+        <p>add a new list by typing its name in it.</p>
+        <p>open a new list by typing its name in it.</p>
+        <p>type the correct name to open the list, if name didnot match it will create new list.</p>
+        
+        </div>
+ -->
+      </div>
+    </div>
+</div>
+<%- include("footer") -%>

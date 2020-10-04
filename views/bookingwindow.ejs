@@ -1,0 +1,152 @@
+<%- include('profileheader') %>
+
+  <script>
+    var stateObject = {
+      Mumbai: [
+        "kokilaben dhirubhai ambani hospital",
+        "Nanavati Hospital",
+        "Fortis Hospital",
+        "SevenHills Hospital",
+        "S. L Raheja Hospital",
+        "Global Hospital, Parel",
+        "Kohinoor Hospital",
+        "Wockhardt Hospital, Mira Road",
+        "Hiranandani Hospital, Vashi",
+      ],
+      Lucknow: [
+        "Sahara Hospital",
+        "Mayo Hospital",
+        "Ford Hospital",
+        "Medanta Hospital",
+        "Shekhar Hospital",
+        "SGPGI Hospital",
+        "Medison Hospital",
+        "Ajanta Hospital and IVF Centre",
+        "Fatima Hospital",
+      ],
+    };
+    window.onload = function () {
+      var countySel = document.getElementById("city"),
+        districtSel = document.getElementById("med");
+      for (var country in stateObject) {
+        countySel.options[countySel.options.length] = new Option(country);
+      }
+
+      countySel.onchange = function () {
+        districtSel.length = 1; // remove all options bar first
+        if (this.selectedIndex < 1) return; // done
+        var district = stateObject[countySel.value];
+        for (var i = 0; i < district.length; i++) {
+          districtSel.options[districtSel.options.length] = new Option(
+            district[i],
+            district[i]
+          );
+        }
+      };
+    };
+  </script>
+
+<div class="main navside" style="margin-top: 4%; ">
+  <div class="contact-clean" style="background: #f4f1f18a">
+    <form class="bg-white border rounded shadow-lg flex-grow-1" method="GET">
+      <h2 class="text-center">Book an Appointment</h2>
+      <div class="form-group">
+        <input
+          type="text"
+          class="border rounded shadow-sm form-control"
+          name="name"
+          placeholder="Name"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="email"
+          class="border rounded shadow-sm form-control is-invalid"
+          name="email"
+          placeholder="Email"
+          style="border-color: rgb(180, 185, 190)"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="tel"
+          class="border rounded shadow-sm form-control"
+          name="contact"
+          placeholder="Contact Number"
+        />
+      </div>
+      <div class="form-group d-lg-flex align-items-lg-end">
+        <div class="custom-control custom-control-inline custom-radio">
+          <input
+            type="radio"
+            class="custom-control-input"
+            name="gender"
+            id="formCheck-2"
+          /><label class="custom-control-label" for="formCheck-2"> Male</label>
+        </div>
+        <div
+          class="custom-control custom-control-inline custom-radio"
+          style="margin: 0 40px"
+        >
+          <input
+            type="radio"
+            name="gender"
+            class="custom-control-input"
+            id="formCheck-1"
+          /><label class="custom-control-label" for="formCheck-1">Female</label>
+        </div>
+        <div class="custom-control custom-control-inline custom-radio">
+          <input
+            type="radio"
+            class="custom-control-input"
+            name="gender"
+            id="formCheck-3"
+          /><label class="custom-control-label" for="formCheck-3">Others</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <select
+          class="border rounded shadow-sm form-control"
+          id="city"
+          required
+        >
+          <option value="12" selected>Select the City</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select
+          class="border rounded shadow-sm form-control"
+          id="med"
+          size="1"
+          required
+        >
+          <option value="12" selected>Select the Hospital</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class="border rounded shadow-sm form-control" required>
+          <option value="12" selected>Select the speciality</option>
+          <option value="">Cardiologist</option>
+          <option value="">Dentist</option>
+          <option value="">ENT</option>
+          <option value="Eye">Eye</option>
+          <option value="Gynaecologist">Gynaecologist</option>
+          <option value="Orthopaedic surgeon">Orthopaedic surgeon</option>
+          <option value="Paediatrician">Paediatrician</option>
+          <option value="Psychiatrists">Psychiatrists</option>
+          <option value="Physician">Physician</option>
+          <option value="Neurologist">Neurologist</option>
+          <option value="Skin">Skin</option>
+          <option value="Surgeon">Surgeon</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">send</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</div> 
+  <%- include('./footer') %>
+

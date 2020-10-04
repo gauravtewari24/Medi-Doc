@@ -1,355 +1,244 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const Item = require("./models/item.js");
-const path = require("path");
-const multer = require("multer");
+var path = require("path");
 
-const _ = require("lodash");
+const hospital = require("./public/js/Hospitals/Lucknow");
+//const _ = require("lodash");
+const request = require("request");
+(User = require("./models/users.js")),
+  (passport = require("passport")),
+  (CryptoJS = require("crypto-js")),
+  (LocalStrategy = require("passport-local")),
+  (Sym_options = require("./public/js/symptoms"));
+var profileRoutes = require("./profile");
+const Item = require("./models/item.js");
+var flash = require("connect-flash"),
+  methodOverride = require("method-override");
 
 const app = express();
+
+const fetch = require("node-fetch");
+
+const ApiMedicHost = "https://sandbox-healthservice.priaid.ch";
+const AuthHost = "https://sandbox-authservice.priaid.ch";
+const password = "Ee6z7H8SqKx4f9G5C";
+const user_id = "gauravtewari2499@gmail.com";
+const computedHash = CryptoJS.HmacMD5(`${AuthHost}/login`, password);
+const computedHashString = computedHash.toString(CryptoJS.enc.Base64);
+let Token = "";
 
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
+app.use(flash());
 
-// ndbc (node data base connection)
+// pdf 
 
-mongoose.connect("mongodb://localhost:27017/Med-Doc", {
-  useNewUrlParser: true,
+mongoose
+  .connect(
+    "mongodb://localhost:27017/Med-Doc",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => console.log("Connected to DB!"))
+  .catch((error) => console.log(error.message));
+
+app.use(
+  require("express-session")({
+    secret: "Once again the monsoon arrives!",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
+  next();
 });
 
-// custom variables
-
-var usern = "";
-var g_f_name = "";
-var g_l_name = "";
-var g_age = "";
-var g_gender = "";
-var g_h_i_s = "";
-var g_phone = "";
-var g_b_p = "";
-var g_b_o = "";
-var g_b_s = "";
-var pdf_no_l = "";
-var date_l = "";
-
-// file system
-
-const storage = multer.diskStorage({
-  destination: "./public/uploads/",
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-"+ pdf_no_l + path.extname(file.originalname));
-  },
-});
-
-// Init Upload
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1000000 },
-}).single("myImage");
-
-// get route
-
-// base route
+app.use("/profile", profileRoutes);
 
 app.get("/", function (req, res) {
-  res.render("landing", { userName: usern });
+  res.render("index");
 });
 
 app.get("/login", function (req, res) {
-  res.redirect("/register");
+  res.render("register1");
 });
 
 app.get("/register", function (req, res) {
-  res.render("register");
+  res.render("register1");
 });
 
-app.get("/lg", function (req, res) {
-  usern = "";
-  g_f_name = "";
-  g_l_name = "";
-  g_age = "";
-  g_gender = "";
-  g_h_i_s = "";
-  g_phone = "";
-  g_b_o = "";
-  g_b_p = "";
-  g_b_s = "";
-  console.log("logout");
+app.get("/logout", function (req, res) {
+  console.log(req.user);
+  req.logout();
+  req.flash("success", "Logged Out !! Successfully ");
+
   res.redirect("/");
 });
 
-// others
-
-app.get("/update_stat", function (req, res) {
-  res.render("update_stat");
+///////////**********SEARCH AND APPOINTMENT BOOKING ROUTES*********//////////////
+app.get("/search_hospital", function (req, res) {
+  res.render("search_hospital", { hospital: hospital });
 });
 
-app.get("/page1", function (req, res) {
-  var elements = [];
-
-  if (usern === "") {
-    res.redirect("/register");
-  } else {
-    Item.findOne({ email: usern }, function (err, element) {
-      if (err) {
-        console.log(err);
-      } else {
-        if (element.user_data.length === 0) {
-          console.log("bhag");
-          var obj = { pdf_no: "no entries found" };
-          elements.push(obj);
-          res.render("page1", { user: usern, elements: elements });
-        } else {
-          for (var i = 0; i < element.user_data.length; i++) {
-            elements.push(element.user_data[i]);
-          }
-        }
-        console.log("elements_found");
-        res.render("page1", { user: usern, elements: elements });
-      }
-    });
-  }
+app.get("/book", function (req, res) {
+  res.render("bookingwindow");
 });
 
-app.get("/page2", function (req, res) {
-  res.render("page2", {
-    f_name: g_f_name,
-    l_name: g_l_name,
-    age: g_age,
-    gender: g_gender,
-    h_i_s: g_h_i_s,
-    phone: g_phone,
-    b_o: g_b_o,
-    b_p: g_b_p,
-    b_s: g_b_s,
-  });
+app.post("/search_result", function (req, res) {
+  var city = req.body.city,
+    hos = req.body.Hospital;
+  city = String(city);
+  res.render("searchresulthospitals", { lucknow: hospital[city], name: city });
 });
 
-app.get("/page3", function (req, res) {
-  res.render("page3");
-});
-app.get("/page4", function (req, res) {
-  res.render("page4");
+////*******Diagnose Routes**********////////////////////
+app.get("/diagnose", isLoggedIn, function (req, res) {
+  res.render("diagnose", { sym: Sym_options });
 });
 
-// post route
-
-// page 1 post route
-app.post("/page1", function (req, res) {
-  const p_no = req.body.pdf_no;
-  const date = req.body.date;
-  const report = req.body.report;
-  const result = req.body.result;
-
-  console.log(p_no);
-
-  pdf_no_l = p_no;
-  date_l = date;
-
-  const new_item = {
-    pdf_no: p_no,
-    date: date,
-    report: report,
-    result: result,
-    update: "not uploaded",
-  };
-  if (usern === "") {
-    res.redirect("/redirect");
-  } else {
-    Item.findOneAndUpdate({ email: usern }, { $push: { user_data: new_item } }, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("entered");
-        res.render("upload");
-      }
-    });
-  }
+app.get("/diagnose/result", function (req, res) {
+  res.render("diagnoseres");
 });
 
-app.post("/download", function (req, res) {
-  var name = req.body.pdf;
-  var path = __dirname + "/public/uploads/myImage-" + name +".pdf";
-  console.log(path);
-  
-  var filePath = path;
-  var fileName = "report.pdf";
+app.post("/diagnose", function (req, res) {
+  const sym = [9];
+  var gender = req.body.gender;
+  const age = req.body.age;
 
-  res.download(filePath, fileName);
-});
-
-app.post("/upload", function (req, res) {
-  upload(req, res, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      if (req.file == undefined) {
-        console.log("not");
-        res.redirect("/page1");
-      } else {
-        console.log("done");
-        res.redirect("/page1");
-      }
-    }
-  });
-});
-
-app.post("/func", function (req, res) {
-  const p_no = req.body.pdf_no;
-  const date = req.body.date;
-  const button = req.body.button;
-  var elements_found = [];
-
-  if (usern === "") {
-    res.redirect("/login");
-  } else {
-    if (button === "search") {
-      Item.findOne(
-        {
-          email: usern,
-          user_data: { $elemMatch: { pdf_no: p_no, date: date } },
-        },
-        function (err, element) {
-          if (err) {
-            console.log(err);
+  fetch(`${AuthHost}/login`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${user_id}:${computedHashString}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      Token = Token + data.Token;
+      console.log(data.Token);
+      request(
+        "https://sandbox-healthservice.priaid.ch/diagnosis?symptoms=[9]" +
+          "&gender=" +
+          gender +
+          "&" +
+          "year_of_birth=" +
+          age +
+          "&token=" +
+          Token +
+          "&format=json&language=en-gb",
+        function (error, response, body) {
+          if (error) {
+            console.log("SOmething Wnt Wrong!!");
+            console.log(error);
           } else {
-            for (i in element.user_data) {
-              if (p_no === element.user_data[i]["pdf_no"]) {
-                elements_found.push(element.user_data[i]);
-              }
+            console.log("HI" + JSON.parse(body));
+            if (response.statusCode == 200) {
+              var data = JSON.parse(body);
+              console.log(data);
+              res.render("diagnoseres.ejs", { data: data, sym: Sym_options });
             }
-            console.log(elements_found);
-            res.render("page1", { user: usern, elements: elements_found });
           }
         }
       );
-    } else if (button === "delete") {
-      console.log("not made yet");
-      Item.findOneAndUpdate({ email: usern }, { $pull: { user_data: { pdf_no: p_no } } }, function (err) {
-        if (!err) {
-          console.log("Successfully deleted checked item.");
-          res.redirect("/page1");
-        }
-      });
-    } else if (button === "show") {
-      res.redirect("/page1");
-    } else {
-      res.redirect("/page1");
-    }
-  }
-});
-// page 2 post route
-
-app.post("/update_stat", function (req, res) {
-  const b_p = req.body.blood_press;
-  const b_o = req.body.blood_oxy;
-  const b_s = req.body.sugar;
-  console.log(b_p);
-
-  if (usern === "") {
-    res.redirect("/register");
-  } else {
-    Item.findOneAndUpdate({ email: usern }, { $set: { user_stat: { blood_oxy: b_o, blood_press: b_p, sugar: b_s } } }, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("entered");
-        res.redirect("/page2");
-      }
     });
-  }
 });
 
-// register and login
+////////////////////register and login//////////////////////////
 
 app.post("/register", function (req, res) {
-  const first_name = req.body.f_name;
-  const last_name = req.body.l_name;
-  const password = req.body.password;
-  const c_password = req.body.c_password;
-  const email = req.body.username;
-  const phone = req.body.phone;
-  const h_i_s = req.body.insurance_status;
-  const age = req.body.age;
-  const gender = req.body.gender;
+  var newUser = new User({ username: req.body.username });
 
-  const newUser = new Item({
-    first_name: first_name,
-    last_name: last_name,
-    email: email,
-    password: password,
-    c_password: c_password,
-    phone: phone,
-    gender: gender,
-    h_i_s: h_i_s,
-    age: age,
-    Uid: email + phone,
+  User.register(newUser, req.body.password, function (err, user) {
+    const first_name = req.body.f_name;
+    const last_name = req.body.l_name;
 
-    userdata: [],
-  });
+    const username = req.body.username;
+    const phone = req.body.phone;
+    const h_i_s = req.body.insurance_status;
+    const age = req.body.age;
+    const gender = req.body.gender;
 
-  Item.findOne({ email: email }, function (err, foundUser) {
     if (err) {
+      req.flash("error", err.message);
       console.log(err);
-      res.redirect("/register");
-    } else if (foundUser) {
-      console.log("user exists");
-      res.redirect("/register");
-    } else {
+      return res.redirect("/register");
+    }
+    passport.authenticate("local")(req, res, function () {
+      req.flash("success", "Welcome to Medi-Doc " + user.username);
+      const newUser = new Item({
+        first_name: first_name,
+        last_name: last_name,
+        username: username,
+        phone: phone,
+        gender: gender,
+        h_i_s: h_i_s,
+        age: age,
+        Uid: username + phone,
+        blood_oxy: "not provided",
+        blood_press: "not provided",
+        sugar: "not provided",
+        thy: "not provided",
+        PSA: "not provided",
+        userdata: [],
+      });
       newUser.save(function (err) {
         if (err) {
           console.log(err);
         } else {
-          usern = req.body.username;
-          g_f_name = req.body.f_name;
-          g_l_name = req.body.l_name;
-          g_age = req.body.age;
-          g_gender = req.body.gender;
-          g_h_i_s = req.body.insurance_status;
-          g_phone = req.body.phone;
-          console.log("register hua abb");
-          res.redirect("/page2");
+          res.redirect("/profile/page2");
         }
       });
-    }
+    });
   });
 });
 
-app.post("/login", function (req, res) {
-  const username = req.body.username;
-  const password = req.body.password;
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/profile/page2",
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
+  function (req, res) {
+    const usern = req.body.username;
+    console.log(error + success);
+    req.flash("success", "Logged in !! Successfully ");
+  }
+);
 
-  Item.findOne({ email: username }, function (err, foundUser) {
-    if (err) {
-      console.log(err);
-      res.redirect("/register");
-    } else if (foundUser) {
-      if (foundUser.password === password) {
-        usern = foundUser.email;
-        g_f_name = foundUser.first_name;
-        g_l_name = foundUser.last_name;
-        g_age = foundUser.age;
-        g_gender = foundUser.gender;
-        g_h_i_s = foundUser.h_i_s;
-        g_phone = foundUser.phone;
-        console.log(usern);
-        res.redirect("/page2");
-      } else {
-        res.redirect("login");
-      }
-    } else {
-      res.redirect("/register");
-    }
-  });
+///////////****************////////
+
+
+
+// report generation route 
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash("error", "You need to be Logged In!");
+  res.redirect("/login");
+}
+app.get("/demo", function (req, res) {
+  res.render("demo");
 });
-
-// post route end here
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function () {
-  console.log("server started at 3000 port");
+  console.log("server started at 8000 port");
 });

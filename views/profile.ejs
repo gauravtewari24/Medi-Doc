@@ -1,0 +1,372 @@
+<%- include('profileheader') %>
+
+<link
+			rel="stylesheet"
+			href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"
+    />
+    
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+		/>
+		<link rel="stylesheet" href="./assets/css/styles_sidebar.css" />
+		<link rel="stylesheet" href="./assets/css/sidebar.css" />
+	</head>
+	<body>
+		<aside class="sidebar">
+			<nav>
+				<ul class="sidebar__nav">
+					<li>
+						<a href="#" class="sidebar__nav__link">
+							<i class="mdi mdi-fingerprint"></i>
+							<span class="sidebar__nav__text">Fingerprint</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="sidebar__nav__link">
+							<i class="mdi mdi-credit-card"></i>
+							<span class="sidebar__nav__text">Credit card</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="sidebar__nav__link">
+							<i class="mdi mdi-cart"></i>
+							<span class="sidebar__nav__text">Shopping cart</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="sidebar__nav__link">
+							<i class="mdi mdi-account-circle"></i>
+							<span class="sidebar__nav__text">Account circle</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="sidebar__nav__link">
+							<i class="mdi mdi-camera"></i>
+							<span class="sidebar__nav__text">Camera</span>
+						</a>
+          </li>
+          <li>
+						<a href="#" class="sidebar__nav__link">
+							<img src="images/online.png" alt="">
+							<span class="sidebar__nav__text">Camera</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="sidebar__nav__link">
+							<i class="mdi mdi-settings"></i>
+							<span class="sidebar__nav__text">Settings</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+        </aside>
+        <nav
+      
+      class="navbar  navbar-light navbar-expand bg-white shadow d-xl-flex align-items-xl-center mb-0 topbar static-top"
+      style="position: fixed; 
+      top: 0; 
+      width: 100%; "
+    >
+      <div class="container-fluid">
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin-top: 0px; margin-bottom: 0"
+        >
+          <i class="fas fa-briefcase-medical"></i>
+        </p>
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin-top: 0px; margin-bottom: 0"
+        >
+          MED-DOC
+        </p>
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin-top: 0px; margin-bottom: 0; margin-left: 35px"
+        >
+          <a href="#" style="color: black">Records</a>
+        </p>
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin-top: 0px; margin-bottom: 0; margin-left: 35px"
+        >
+          <a href="/diagnose" style="color: black">Diagnose</a>
+        </p>
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin-top: 0px; margin-bottom: 0; margin-left: 35px"
+        >
+          <a href="/search_hospital" style="color: black"
+            >Book an Appointment</a
+          >
+        </p>
+        <ul class="nav navbar-nav flex-nowrap ml-auto">
+          <li class="nav-item dropdown no-arrow mx-1" role="presentation">
+            <div class="nav-item dropdown no-arrow">
+              <a
+                class="dropdown-toggle nav-link"
+                data-toggle="dropdown"
+                aria-expanded="false"
+                href="#"
+                ><span class="badge badge-danger badge-counter">3+</span
+                ><i class="fas fa-bell fa-fw"></i
+              ></a>
+              <div
+                class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+                role="menu"
+              >
+                <h6 class="dropdown-header">alerts center</h6>
+                <a class="d-flex align-items-center dropdown-item" href="#">
+                  <div class="mr-3">
+                    <div class="bg-primary icon-circle">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="small text-gray-500">December 12, 2019</span>
+                    <p>A new monthly report is ready to download!</p>
+                  </div>
+                </a>
+                <a
+                  class="text-center dropdown-item small text-gray-500"
+                  href="#"
+                  >Show All Alerts</a
+                >
+              </div>
+            </div>
+          </li>
+          <% if(!currentUser) {%>
+          <li class="nav-item dropdown no-arrow" role="presentation">
+            <div class="nav-item dropdown no-arrow">
+              <a
+                class="dropdown-toggle nav-link"
+                data-toggle="dropdown"
+                aria-expanded="false"
+                href="#"
+                ><span class="d-none d-lg-inline mr-2 text-gray-600 small"
+                  >Profile</span
+                ><img
+                  class="border rounded-circle img-profile"
+                  src="assets/img/8151-Mega-Mewtwo-Y.png"
+                  style="width: 30px; height: 30px"
+              /></a>
+              <div
+                class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+                role="menu"
+              >
+                <a class="dropdown-item" role="presentation" href="/login"
+                  ><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Login</a
+                >
+                <a class="dropdown-item" role="presentation" href="/register"
+                  ><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Signup</a
+                >
+              </div>
+            </div>
+          </li>
+          <%}else{%>
+          <li class="nav-item dropdown no-arrow" role="presentation">
+            <div class="nav-item dropdown no-arrow">
+              <a
+                class="dropdown-toggle nav-link"
+                data-toggle="dropdown"
+                aria-expanded="false"
+                href="#"
+                ><span class="d-none d-lg-inline mr-2 text-gray-600 small"
+                  ><%=currentUser.username%></span
+                ><img
+                  class="border rounded-circle img-profile"
+                  src="assets/img/8151-Mega-Mewtwo-Y.png"
+                  style="width: 30px; height: 30px"
+              /></a>
+              <div
+                class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+                role="menu"
+              >
+                <a class="dropdown-item" role="presentation" href="#"
+                  ><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Profile</a
+                ><a class="dropdown-item" role="presentation" href="#"
+                  ><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Settings</a
+                >
+                <a class="dropdown-item" role="presentation" href="#"
+                  ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Activity log</a
+                >
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" role="presentation" href="/logout"
+                  ><i
+                    class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                  ></i
+                  >&nbsp;Logout</a
+                >
+              </div>
+            </div>
+          </li>
+          <%}%>
+        </ul>
+      </div>
+    </nav>
+    <p></p>
+    <div class="container">
+      <%if(error && error.length >0){ %>
+      <div class="alert alert-danger" role="alert"><%= error%></div>
+      <%}%> <%if(success && success.length >0){ %>
+
+      <div class="alert alert-success" role="alert"><%= success%></div>
+      <%}%>
+    </div>
+
+		<main class="main">
+			<section>
+				<h2>Title 1</h2>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
+					voluptas dicta quaerat explicabo? Minus corporis mollitia beatae nisi
+					earum, ut omnis, cum ducimus nesciunt deleniti veniam tenetur
+					exercitationem, odit iure? Lorem ipsum dolor sit amet consectetur
+					adipisicing elit. Eaque ad inventore voluptatem eveniet quibusdam eos
+					accusamus, architecto consequatur? Voluptate deleniti hic quam quos
+					beatae voluptates, quis est animi totam ullam.
+				</p>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
+					voluptas dicta quaerat explicabo? Minus corporis mollitia beatae nisi
+					earum, ut omnis, cum ducimus nesciunt deleniti veniam tenetur
+					exercitationem, odit iure? Lorem ipsum dolor sit amet consectetur
+					adipisicing elit. Eaque ad inventore voluptatem eveniet quibusdam eos
+					accusamus, architecto consequatur? Voluptate deleniti hic quam quos
+					beatae voluptates, quis est animi totam ullam.
+				</p>
+				<p>
+					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora
+					placeat nobis quisquam, maxime, dolorem aperiam accusamus commodi eius
+					commodi at.
+				</p>
+			</section>
+			<section>
+				<h2>Title 2</h2>
+				<p>
+					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora
+					placeat nobis quisquam, maxime, dolorem aperiam accusamus commodi eius
+					commodi at.
+				</p>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
+					voluptas dicta quaerat explicabo? Minus corporis mollitia beatae nisi
+					earum, ut omnis, cum ducimus nesciunt deleniti veniam tenetur
+					exercitationem, odit iure? Lorem ipsum dolor sit amet consectetur
+					adipisicing elit. Eaque ad inventore voluptatem eveniet quibusdam eos
+					accusamus, architecto consequatur? Voluptate deleniti hic quam quos
+					beatae voluptates, quis est animi totam ullam.
+				</p>
+				<p>
+					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
+					molestiae vero dolorum maiores veniam maxime obcaecati recusandae
+					autem assumenda nam vel eum, repellat tenetur at. Dolorem officiis
+					explicabo amet vero.
+				</p>
+			</section>
+			<section>
+				<h2>Title 3</h2>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro odio
+					placeat nobis quisquam, maxime, dolorem aperiam accusamus commodi eius
+					iste obcaecati. Mollitia magnam blanditiis asperiores. Voluptatibus
+					molestiae vel perspiciatis animi?
+				</p>
+			</section>
+			<section>
+				<h2>Title 4</h2>
+				<p>
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto,
+					aut necessitatibus, non ab nemo illum adipisci alias sed expedita
+					dicta ut repellendus laborum ratione iusto facilis fugit deleniti
+					neque numquam?
+				</p>
+			</section>
+		</main>
+
+
+  
+
+        
+        <div class="contact-clean main">
+            <form method="post">
+              <h2 class="text-center">Contact us</h2>
+              <div class="form-group">
+                <input class="form-control" type="text" name="name" placeholder="Name" />
+              </div>
+              <div class="form-group">
+                <input
+                  class="form-control is-invalid"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  style="border-color: rgb(179, 182, 186)"
+                />
+              </div>
+              <div class="form-group">
+                <textarea
+                  class="form-control"
+                  name="message"
+                  placeholder="Message"
+                  rows="14"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">send</button>
+              </div>
+            </form>
+          </div>
+         
+                  <!-- <div class="form-group">
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="symptoms"
+                      placeholder="gender"
+                    />
+                  </div> -->
+          
+                  <div class="form-group">
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="gender"
+                      placeholder="gender"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="age"
+                      placeholder="age"
+                    />
+                  </div>
+          
+                  <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <!-- <form action="/diagnose" method="POST">
+           <input type="number" name="symptoms" >
+          <input type="text" name="gender" >
+          <input type="text" name="age" >
+          <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+           </form>        -->
+          
+          <%- include('./footer') %>
+          
+
+			
+  
+ 

@@ -1,0 +1,33 @@
+<%- include('profileheader') %>
+<div class="main navside" style="margin-top: 4%">
+  <div>
+    <h1 class="text-center">Diagnosis Results</h1>
+
+    <div class="container">
+      <div class="row">
+        <%data.forEach(function(res){%>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body shadow">
+              <h6 class="text-muted card-subtitle mb-2">
+                Disease - <%=res["Issue"]["Name"]%>
+              </h6>
+              <h6 class="text-muted card-subtitle mb-2">
+                IcdName - <%=res["Issue"]["IcdName"]%>
+              </h6>
+              <h6 class="text-muted card-subtitle mb-2">
+                ProfName - <%=res["Issue"]["ProfName"]%>
+              </h6>
+              <h6 class="text-muted card-subtitle mb-2">
+                Accuracy - <%=res["Issue"]["Accuracy"]%>
+              </h6>
+              <a class="card-link" href="#">Link</a>
+            </div>
+          </div>
+        </div>
+        <%})%>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('./footer') %>

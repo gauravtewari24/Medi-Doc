@@ -1,24 +1,60 @@
-<%- include('header') %>
+<%- include('profileheader') %>
 
 <div>
-  <div class="row" style="padding: 100px 20px;">
+  <div class="row" style="padding: 100px 20px">
     <div class="col-lg-4 col-md-3 col-1"></div>
 
-    <div class="col-lg-4 col-md-6 col-10" style="background-color: rgba(105, 100, 100, 0.5); padding: 40px;">
-      <h1 style="padding: 0;">update details</h1>
+    <div
+      class="col-lg-4 col-md-6 col-10 container"
+      style="background-color: white; opacity: 0.92; padding: 40px"
+    >
+      <h1 style="padding: 0 0 0 20px">Update Details</h1>
       <br />
       <!-- Makes POST request to /login route -->
-      <form action="/update_stat" method="POST">
+      <form action="/profile/update_stat" method="POST">
         <div class="form-group">
-          <input type="text" class="form-control" name="blood_oxy" placeholder="blood oxygen level" />
+          <input
+            type="text"
+            class="form-control"
+            name="blood_oxy"
+            placeholder="blood oxygen level"
+          />
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" name="blood_press" placeholder="blood pressure level" />
+          <input
+            type="text"
+            class="form-control"
+            name="blood_press"
+            placeholder="blood pressure level"
+          />
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" name="sugar" placeholder="blood sugar level" />
+          <input
+            type="text"
+            class="form-control"
+            name="sugar"
+            placeholder="blood sugar level"
+          />
         </div>
-        <button type="submit" class="btn btn-dark">submit</button>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            name="thyroid"
+            placeholder="TSH:"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            name="bekar"
+            placeholder="PSA"
+          />
+        </div>
+        <button style="margin-left: 25px" type="submit" class="btn btn-dark">
+          submit
+        </button>
       </form>
 
       <!-- </div>

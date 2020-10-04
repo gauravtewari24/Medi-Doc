@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <link rel="icon" href="http://sstatic.net/stackoverflow/img/favicon.ico" />
+    <title>Medi-Bootstrap</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Bitter:400,700"
+    />
+    <link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Bree+Serif"
+		/>
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css" />
+    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css" />
+    <link rel="stylesheet" href="assets/css/Features-Boxed.css" />
+    <link rel="stylesheet" href="assets/css/Footer-Dark.css" />
+    <link rel="stylesheet" href="assets/css/Header-Dark.css" />
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css" />
+    <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/Team-Boxed.css" />
+    <link rel="stylesheet" href="./assets/css/styles_sidebar.css" />
+    <link rel="stylesheet" href="./assets/css/sidebar.css" />
+    <link rel="stylesheet" href="./assets/css/Featues-clean.css" />
+    <script src="https://use.fontawesome.com/919e1f2ea4.js"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"
+      rel="stylesheet"
+    />
+    <!-- bootstrap -->
+   
+    <!-- bootstrap -->
+    <script
+      src="https://kit.fontawesome.com/f6d582d66b.js"
+      crossorigin="anonymous"
+    ></script>
+  
+    
+    <!-- registration page css -->
+
+    <script async>
+      (function (w, d) {
+        w.CollectId = "5f590515f06f452966724d9a";
+        var h = d.head || d.getElementsByTagName("head")[0];
+        var s = d.createElement("script");
+        s.setAttribute("type", "text/javascript");
+        s.setAttribute("src", "https://collectcdn.com/launcher.js");
+        h.appendChild(s);
+      })(window, document);
+    </script>
+    <script async>
+      window.onscroll = function () {
+        myFunction();
+      };
+
+      // Get the navbar
+      var navbar = document.getElementById("navbar");
+
+      // Get the offset position of the navbar
+      var sticky = navbar.offsetTop;
+
+      // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+      function myFunction() {
+        if (window.pageYOffset >= sticky) {
+          navbar.classList.add("sticky");
+        } else {
+          navbar.classList.remove("sticky");
+        }
+      }
+    </script>
+    <style>
+      .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+      }
+      .content {
+        padding: 16px;
+      }
+
+      /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+      .sticky + .content {
+        padding-top: 60px;
+      }
+
+      @media (min-width: 572px) {
+        .navside {
+          margin-left: var(--sidebar-width);
+        }
+      }
+
+      /*  @media (min-width: 992px) {
+        .navside {
+          padding: 2.5em;
+        }
+      } */
+      /* .navside {
+         margin-left: auto;
+        margin-right: auto; 
+      max-width: 100%;
+      /* padding: 2em 1.5em; 
+      } */
+    </style>
+  </head>
+
+  <body>
+    <link
+			rel="stylesheet"
+			href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css"
+    />
+    
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+		/>
+		<link rel="stylesheet" href="./assets/css/styles_sidebar.css" />
+		<link rel="stylesheet" href="./assets/css/sidebar.css" />
+	</head>
+	<body>
+		<aside class="sidebar" style="z-index: 1;">
+			<nav>
+				<ul class="sidebar__nav">
+					
+					<li>
+						<a href="/profile/page2" class="sidebar__nav__link">
+							<i class="mdi mdi-account-circle"></i>
+							<span class="sidebar__nav__text">Profile</span>
+						</a>
+					</li>
+					<li>
+						<a href="/profile/page1" class="sidebar__nav__link">
+							<i class="mdi mdi-file-check"></i>
+							<span class="sidebar__nav__text">Records</span>
+						</a>
+					</li>
+					<li>
+						<a href="/profile/diagnose" class="sidebar__nav__link">
+							<i class="mdi mdi-medical-bag"></i>
+							<span class="sidebar__nav__text">Diagnose</span>
+						</a>
+					</li>
+					<li>
+						<a href="/profile/searchHospital" class="sidebar__nav__link">
+							<i class="mdi mdi-hospital-building"></i>
+							<span class="sidebar__nav__text">Search for hospital</span>
+						</a>
+          </li>
+          
+					<li>
+						<a href="/profile/book" class="sidebar__nav__link">
+							<i class="mdi mdi-bookmark-plus"></i>
+							<span class="sidebar__nav__text">Book an Appoinment</span>
+						</a>
+          </li>
+          <li>
+						<a href="/appointment_history" class="sidebar__nav__link">
+							<i class="mdi mdi-history"></i>
+							<span class="sidebar__nav__text">Appoinment History</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+        </aside>
+        <nav
+      
+      class="navbar  navbar-light navbar-expand bg-white shadow d-xl-flex align-items-xl-center mb-0 topbar static-top"
+      style="position: fixed; 
+      top: 0; 
+      width: 100%; z-index:  1;"
+    >
+      <div class="container-fluid">
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin:0 20px 0 20px;padding:0"
+        >
+        <i class="fas fa-laptop-medical"></i>
+        </p>
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin-top: 0px; margin-bottom: 0"
+        >
+          MEDI-DOC
+        </p>
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin-top: 0px; margin-bottom: 0; margin-left: 35px"
+        >
+          <a href="/" style="color: black">Home</a>
+        </p>
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin-top: 0px; margin-bottom: 0; margin-left: 35px"
+        >
+          <a href="/aboutus" style="color: black">About Us</a>
+        </p>
+        <p
+          class="text-left d-xl-flex align-items-xl-center"
+          style="margin-top: 0px; margin-bottom: 0; margin-left: 35px"
+        >
+          <a href="/contact" style="color: black"
+            >Contact</a
+          >
+        </p>
+        <ul class="nav navbar-nav flex-nowrap ml-auto">
+          <li class="nav-item dropdown no-arrow mx-1" role="presentation">
+            <div class="nav-item dropdown no-arrow">
+              <a
+                class="dropdown-toggle nav-link"
+                data-toggle="dropdown"
+                aria-expanded="false"
+                href="#"
+                ><span class="badge badge-danger badge-counter">3+</span
+                ><i class="fas fa-bell fa-fw"></i
+              ></a>
+              <div
+                class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+                role="menu"
+              >
+                <h6 class="dropdown-header">alerts center</h6>
+                <a class="d-flex align-items-center dropdown-item" href="#">
+                  <div class="mr-3">
+                    <div class="bg-primary icon-circle">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="small text-gray-500">December 12, 2019</span>
+                    <p>A new monthly report is ready to download!</p>
+                  </div>
+                </a>
+                <a
+                  class="text-center dropdown-item small text-gray-500"
+                  href="#"
+                  >Show All Alerts</a
+                >
+              </div>
+            </div>
+          </li>
+          <% if(!currentUser) {%>
+          <li class="nav-item dropdown no-arrow" role="presentation">
+            <div class="nav-item dropdown no-arrow">
+              <a
+                class="dropdown-toggle nav-link"
+                data-toggle="dropdown"
+                aria-expanded="false"
+                href="#"
+                ><span class="d-none d-lg-inline mr-2 text-gray-600 small"
+                  >Profile</span
+                ><img
+                  class="border rounded-circle img-profile"
+                  src="https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg"
+                  style="width: 30px; height: 30px"
+              /></a>
+              <div
+                class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+                role="menu"
+              >
+                <a class="dropdown-item" role="presentation" href="/login"
+                  ><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Login</a
+                >
+                <a class="dropdown-item" role="presentation" href="/register"
+                  ><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Signup</a
+                >
+              </div>
+            </div>
+          </li>
+          <%}else{%>
+          <li class="nav-item dropdown no-arrow" role="presentation">
+            <div class="nav-item dropdown no-arrow">
+              <a
+                class="dropdown-toggle nav-link"
+                data-toggle="dropdown"
+                aria-expanded="false"
+                href="#"
+                ><span class="d-none d-lg-inline mr-2 text-gray-600 small"
+                  ><%=currentUser.username%></span
+                ><img
+                  class="border rounded-circle img-profile"
+                  src="https://cdn2.vectorstock.com/i/1000x1000/20/76/man-avatar-profile-vector-21372076.jpg"
+                  style="width: 30px; height: 30px"
+              /></a>
+              <div
+                class="dropdown-menu shadow dropdown-menu-right animated--grow-in"
+                role="menu"
+              >
+                <a class="dropdown-item" role="presentation" href="#"
+                  ><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Profile</a
+                ><a class="dropdown-item" role="presentation" href="#"
+                  ><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Settings</a
+                >
+                <a class="dropdown-item" role="presentation" href="#"
+                  ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i
+                  >&nbsp;Activity log</a
+                >
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" role="presentation" href="/logout"
+                  ><i
+                    class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                  ></i
+                  >&nbsp;Logout</a
+                >
+              </div>
+            </div>
+          </li>
+          <%}%>
+        </ul>
+      </div>
+    </nav>
+    <p></p>
+    <div class="container">
+      <%if(error && error.length >0){ %>
+      <div class="alert alert-danger" role="alert"><%= error%></div>
+      <%}%> <%if(success && success.length >0){ %>
+
+      <div class="alert alert-success" role="alert"><%= success%></div>
+      <%}%>
+    </div>

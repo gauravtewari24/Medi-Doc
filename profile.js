@@ -30,7 +30,7 @@ var date_l = "";
 const storage = multer.diskStorage({
   destination: "./public/uploads/",
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-"+ pdf_no_l + path.extname(file.originalname));
+    cb(null, file.fieldname + "-" + pdf_no_l + path.extname(file.originalname));
   },
 });
 
@@ -84,21 +84,25 @@ router.post("/page1", function (req, res) {
     result: result,
   };
 
-  Item.findOneAndUpdate({ username: usern.username }, { $push: { user_data: new_item } }, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("entered");
-      res.render("upload");
+  Item.findOneAndUpdate(
+    { username: usern.username },
+    { $push: { user_data: new_item } },
+    function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("entered");
+        res.render("upload");
+      }
     }
-  });
+  );
 });
 
 router.post("/download", function (req, res) {
   var name = req.body.pdf;
-  var path = __dirname + "/public/uploads/myImage-" + name +".pdf";
+  var path = __dirname + "/public/uploads/myImage-" + name + ".pdf";
   console.log(path);
-  
+
   var filePath = path;
   var fileName = "report.pdf";
 
@@ -137,10 +141,10 @@ router.post("/func", isLoggedIn, function (req, res) {
         if (err) {
           console.log(err);
         } else {
-          if(element === null){
+          if (element === null) {
             console.log("BHAK");
             res.redirect("/profile/page1");
-          }else{
+          } else {
             for (i in element.user_data) {
               if (p_no === element.user_data[i]["pdf_no"]) {
                 elements_found.push(element.user_data[i]);
@@ -157,21 +161,22 @@ router.post("/func", isLoggedIn, function (req, res) {
     );
   } else if (button === "delete") {
     console.log("not made yet");
-    Item.findOneAndUpdate({ username: usern.username }, { $pull: { user_data: { pdf_no: p_no } } }, function (err) {
-      if (!err) {
-        console.log("Successfully deleted checked item." + usern.username);
-        res.redirect("/profile/page1");
+    Item.findOneAndUpdate(
+      { username: usern.username },
+      { $pull: { user_data: { pdf_no: p_no } } },
+      function (err) {
+        if (!err) {
+          console.log("Successfully deleted checked item." + usern.username);
+          res.redirect("/profile/page1");
+        }
       }
-    });
+    );
   } else if (button === "show") {
     res.redirect("/profile/page1");
   } else {
     res.redirect("/profile/page1");
   }
 });
-
-
-
 
 router.get("/page2", isLoggedIn, function (req, res) {
   Item.find({ username: req.user.username }, function (err, data) {
@@ -208,14 +213,26 @@ router.post("/update_stat", isLoggedIn, function (req, res) {
   const b_psa = req.body.bekar;
   const usern = req.user;
   console.log(b_p);
-  Item.findOneAndUpdate({ username: usern.username }, { $set: { blood_oxy: b_o, blood_press: b_p, sugar: b_s, thy : b_t, PSA: b_psa } }, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("updated");
-      res.redirect("/profile/page2");
+  Item.findOneAndUpdate(
+    { username: usern.username },
+    {
+      $set: {
+        blood_oxy: b_o,
+        blood_press: b_p,
+        sugar: b_s,
+        thy: b_t,
+        PSA: b_psa,
+      },
+    },
+    function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("updated");
+        res.redirect("/profile/page2");
+      }
     }
-  });
+  );
 });
 
 //// GAURAVS PART OF CODE ////
@@ -234,7 +251,7 @@ router.post("/search_result", function (req, res) {
   res.render("searchresulthospitals", { lucknow: hospital[city], name: city });
 });
 
-router.get("/diagnose", function (req, res) {
+/* router.get("/diagnose", function (req, res) {
   res.render("diagnose", { sym: Sym_options });
 });
 
@@ -283,6 +300,12 @@ router.post("/diagnose", function (req, res) {
       );
     });
 });
+ */
+router.get("/diagnose", function (req, res) {
+  res.render("diagnose_bot");
+});
+
+router.get("/appointment_history", function (req, res) {});
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {

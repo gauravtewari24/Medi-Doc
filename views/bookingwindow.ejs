@@ -1,4 +1,12 @@
-<%- include('profileheader') %>
+<%- include('bookingheader') %>
+<style>
+  body {
+  background-image: url("../images/img.jpg");
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+</style>
 
   <script>
     var stateObject = {
@@ -47,8 +55,8 @@
   </script>
 
 <div class="main navside" style="margin-top: 4%; ">
-  <div class="contact-clean" style="background: #f4f1f18a">
-    <form class="bg-white border rounded shadow-lg flex-grow-1" method="GET">
+  <div class="contact-clean" style="background: #f4f1f18a " >
+    <form class="bg-white border rounded shadow-lg flex-grow-1" method="post" action="/email" style="padding:55px">
       <h2 class="text-center">Book an Appointment</h2>
       <div class="form-group">
         <input
@@ -75,6 +83,14 @@
           placeholder="Contact Number"
         />
       </div>
+      <div class="form-group">
+        <input
+          type="date"
+          class="border rounded shadow-sm form-control"
+          name="date"
+          placeholder="Date of Appointment"
+        />
+      </div>
       <div class="form-group d-lg-flex align-items-lg-end">
         <div class="custom-control custom-control-inline custom-radio">
           <input
@@ -82,7 +98,8 @@
             class="custom-control-input"
             name="gender"
             id="formCheck-2"
-          /><label class="custom-control-label" for="formCheck-2"> Male</label>
+            value="Male"
+          /><label class="custom-control-label" for="formCheck-2" > Male</label>
         </div>
         <div
           class="custom-control custom-control-inline custom-radio"
@@ -93,6 +110,7 @@
             name="gender"
             class="custom-control-input"
             id="formCheck-1"
+            value="Female"
           /><label class="custom-control-label" for="formCheck-1">Female</label>
         </div>
         <div class="custom-control custom-control-inline custom-radio">
@@ -101,6 +119,7 @@
             class="custom-control-input"
             name="gender"
             id="formCheck-3"
+            value="Others"
           /><label class="custom-control-label" for="formCheck-3">Others</label>
         </div>
       </div>
@@ -126,9 +145,9 @@
       <div class="form-group">
         <select class="border rounded shadow-sm form-control" required>
           <option value="12" selected>Select the speciality</option>
-          <option value="">Cardiologist</option>
-          <option value="">Dentist</option>
-          <option value="">ENT</option>
+          <option value="Cardiologist">Cardiologist</option>
+          <option value="Dentist">Dentist</option>
+          <option value="ENT">ENT</option>
           <option value="Eye">Eye</option>
           <option value="Gynaecologist">Gynaecologist</option>
           <option value="Orthopaedic surgeon">Orthopaedic surgeon</option>
@@ -141,6 +160,14 @@
         </select>
       </div>
       <div class="form-group">
+        <select class="border rounded shadow-sm form-control" required>
+          <option value="12" selected>Select the Doctor</option>
+          <option value="Cardiologist">Dr Shailesh Srivastava</option>
+          <option value="Dentist">Dr. Arvind Kumar</option>
+          
+        </select>
+      </div>
+      <div class="form-group">
         <button class="btn btn-primary" type="submit">send</button>
       </div>
     </form>
@@ -148,5 +175,6 @@
 </div>
 
 </div> 
+
   <%- include('./footer') %>
 

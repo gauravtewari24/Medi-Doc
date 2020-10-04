@@ -20,6 +20,11 @@ const ISchema = {
       details: String,
     },
   ],
+  user_stat: {
+    blood_oxy: String,
+    blood_press: String,
+    sugar: String,
+  },
   user_data: [
     {
       pdf_no: String,

@@ -1,0 +1,44 @@
+<%- include('profileheader') %>
+<script
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+  type="text/javascript"
+></script>
+<script scr="https://healthcare-bot-jvhfstzsqq2ps.azurewebsites.net/"></script>
+
+<div class="main navside" style="margin-top: 4%">
+  <button id="postYourAdd" onclick="chatbot()" style="margin: 20% 50% 0 50%">
+    Diagnose- Get Started
+  </button>
+
+  <div align="center">
+    <iframe
+      id="invokeBot"
+      data-src="https://healthcare-bot-jvhfstzsqq2ps.azurewebsites.net/"
+      src="about:blank"
+      style="opacity: 0.95"
+      height="600px"
+      width="100%"
+      align="center"
+      style="display: none"
+      frameborder="0"
+    ></iframe>
+  </div>
+</div>
+<div>
+  <script async>
+    function chatbot() {
+      var x = document.getElementById("postYourAdd");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+
+      var iframe = $("#invokeBot");
+      iframe.attr("src", iframe.data("src"));
+      document.getElementById("invokeBot").style.display = "block";
+    }
+    window.onload = chatbot;
+  </script>
+  <%- include('./footer') %>
+</div>

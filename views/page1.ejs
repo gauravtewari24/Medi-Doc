@@ -1,43 +1,119 @@
 <%- include('profileheader') %>
 
-<div class="row main navside">
+<div class="row main navside" style="margin-top: 4%">
   <div class="col col-lg-9 col-md-6">
     <% var i=0; elements.forEach(function(element){ %>
     <div class="items" style="color: white">
-      <p style="width: 30%; padding: 20px; color: white; font-size: 0.8em"><%= element.pdf_no %></p>
-      <p style="width: 30%; padding: 20px; color: white; font-size: 0.8em"><%= element.date %></p>
-      <p style="width: 30%; padding: 20px; color: white; font-size: 0.8em"><%= element.report %></p>
-      <p style="width: 30%; padding: 20px; color: white; font-size: 0.8em"><%= element.result %></p>
+      <p style="width: 30%; padding: 20px; color: white; font-size: 0.8em">
+        <%= element.pdf_no %>
+      </p>
+      <p style="width: 30%; padding: 20px; color: white; font-size: 0.8em">
+        <%= element.date %>
+      </p>
+      <p style="width: 30%; padding: 20px; color: white; font-size: 0.8em">
+        <%= element.report %>
+      </p>
+      <p style="width: 30%; padding: 20px; color: white; font-size: 0.8em">
+        <%= element.result %>
+      </p>
       <form action="/profile/download" method="POST">
-        <button type="submit" name="pdf" value="<%= element.pdf_no %>" class="button">download</button>
+        <button
+          type="submit"
+          name="pdf"
+          value="<%= element.pdf_no %>"
+          class="button"
+        >
+          download
+        </button>
       </form>
     </div>
     <% }) %>
   </div>
   <div class="col col-lg-3 col-mg-6">
-    <div class="r-div" style="background-color: #ffffff; padding: 20px; margin-top: 20px;">
+    <div
+      class="r-div"
+      style="background-color: #ffffff; padding: 20px; margin-top: 20px"
+    >
       <form action="/profile/page1" method="POST">
         <div class="form-group">
-          <input type="" class="form-control form-control-sm form-control-plaintext" name="pdf_no" placeholder="unique pdf name here">
-          <input type="" class="form-control form-control-sm form-control-plaintext" name="date" placeholder="date of issue">
-          <input type="" class="form-control form-control-sm form-control-plaintext" name="report" placeholder="report summary">
-          <input type="" class="form-control form-control-sm form-control-plaintext" name="result" placeholder="result status">
-      </div>
-      <button class="button" type="submit" class="btn btn-primary">proceed</button>
+          <input
+            type=""
+            class="form-control form-control-sm form-control-plaintext"
+            name="pdf_no"
+            placeholder="unique pdf name here"
+          />
+          <input
+            type=""
+            class="form-control form-control-sm form-control-plaintext"
+            name="date"
+            placeholder="date of issue"
+          />
+          <input
+            type=""
+            class="form-control form-control-sm form-control-plaintext"
+            name="report"
+            placeholder="report summary"
+          />
+          <input
+            type=""
+            class="form-control form-control-sm form-control-plaintext"
+            name="result"
+            placeholder="result status"
+          />
+        </div>
+        <button class="button" type="submit" class="btn btn-primary">
+          proceed
+        </button>
       </form>
     </div>
     <!-- -->
-    <div class="r-div" style="background-color: #ffffff; padding: 20px;">
+    <div class="r-div" style="background-color: #ffffff; padding: 20px">
       <form action="/profile/func" method="POST">
         <div class="form-group">
-          <input type="" class="form-control form-control-sm form-control-plaintext" name="pdf_no" placeholder="pdf_no" />
-          <input type="" class="form-control form-control-sm form-control-plaintext" name="date" placeholder="date" />
+          <input
+            type=""
+            class="form-control form-control-sm form-control-plaintext"
+            name="pdf_no"
+            placeholder="pdf_no"
+          />
+          <input
+            type=""
+            class="form-control form-control-sm form-control-plaintext"
+            name="date"
+            placeholder="date"
+          />
         </div>
-        <button class="button" type="submit" id="search" name="button" value="search" class="btn btn-primary">search</button>
-        <button class="button" style="margin-left: 20px; margin-right: 20px" type="submit" id="delete" name="button" value="delete" class="btn btn-danger">
+        <button
+          class="button"
+          type="submit"
+          id="search"
+          name="button"
+          value="search"
+          class="btn btn-primary"
+        >
+          search
+        </button>
+        <button
+          class="button"
+          style="margin-left: 20px; margin-right: 20px"
+          type="submit"
+          id="delete"
+          name="button"
+          value="delete"
+          class="btn btn-danger"
+        >
           delete
         </button>
-        <button class="button" type="submit" id="show" name="button" value="show" class="btn btn-success">show all</button>
+        <button
+          class="button"
+          type="submit"
+          id="show"
+          name="button"
+          value="show"
+          class="btn btn-success"
+        >
+          show all
+        </button>
       </form>
     </div>
   </div>

@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var path = require("path");
-
+const sendMail = require("./public/js/mail.js");
 const hospital = require("./public/js/Hospitals/Lucknow");
 //const _ = require("lodash");
 const request = require("request");
@@ -13,6 +13,7 @@ const request = require("request");
   (Sym_options = require("./public/js/symptoms"));
 var profileRoutes = require("./profile");
 const Item = require("./models/item.js");
+const Appointment = require("./models/appointment.js");
 var flash = require("connect-flash"),
   methodOverride = require("method-override");
 
@@ -35,11 +36,9 @@ app.use(express.static("public"));
 app.use(methodOverride("_method"));
 app.use(flash());
 
-// pdf 
-
 mongoose
   .connect(
-    "mongodb://localhost:27017/Med-Doc",
+    "mongodb://u7l8arllam84y5ujfhrv:KExrqmWn7xk4Z29bOtzW@buhu1tnk1zats5y-mongodb.services.clever-cloud.com:27017/buhu1tnk1zats5y",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -70,6 +69,9 @@ app.use(function (req, res, next) {
 
 app.use("/profile", profileRoutes);
 
+/* app.get("/chatbot", function (req, res) {
+  res.render("bot page");
+}); */
 app.get("/", function (req, res) {
   res.render("index");
 });
@@ -91,7 +93,7 @@ app.get("/logout", function (req, res) {
 });
 
 ///////////**********SEARCH AND APPOINTMENT BOOKING ROUTES*********//////////////
-app.get("/search_hospital", function (req, res) {
+/* app.get("/search_hospital", function (req, res) {
   res.render("search_hospital", { hospital: hospital });
 });
 
@@ -105,17 +107,160 @@ app.post("/search_result", function (req, res) {
   city = String(city);
   res.render("searchresulthospitals", { lucknow: hospital[city], name: city });
 });
+ */
+////////////////////************************////////////////////////// */
+
+app.post("/email", (req, res) => {
+  const { email, name, gender, contact, date } = req.body;
+  const usern = req.user;
+  var last2 = contact.slice(-2);
+  const new_item = {
+    email,
+    name,
+    hospital: "Nanavati Hospital",
+    speciality: "EYE",
+    doctor: "Dr Shailesh Srivastava",
+    gender,
+    contact,
+    no: last2,
+    date,
+  };
+
+  Appointment.findOneAndUpdate(
+    { username: usern.username },
+    { $push: { user_data: new_item } },
+    function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("appoitment registered");
+      }
+    }
+  );
+
+  const text =
+    "Name : " +
+    name +
+    "\n" +
+    "hospital : Nanavati Hospital" +
+    "\n" +
+    "Speciality: Eye" +
+    "\n" +
+    "date: 27-10-2020";
+
+  sendMail(email, text, function (err, data) {
+    if (err) {
+      console.log("ERROR: ", err);
+      res.redirect("/profile/book");
+    } else {
+      console.log("Email sent!!!");
+      res.redirect("/profile/book");
+    }
+  });
+});
+
+app.get("/appointment_history", isLoggedIn, function (req, res) {
+  var elements = [];
+  const usern = req.user;
+
+  Appointment.findOne({ username: usern.username }, function (err, element) {
+    if (err) {
+      console.log(err);
+    } /*  else {
+      if (element.user_data.length === 0) {
+        console.log("bhag");
+        var obj = { pdf_no: "no entries found" };
+        elements.push(obj);
+        res.render("page1", { user: usern.username, elements: elements });
+      }  */ else {
+      console.log(element.user_data);
+      for (var i = 0; i < element.user_data.length; i++) {
+        elements.push(element.user_data[i]);
+      }
+      console.log("appointments_found");
+      res.render("appointmenthistory", { elements: elements });
+    }
+  });
+});
+
+app.post("/register", function (req, res) {
+  var newUser = new User({ username: req.body.username });
+
+  User.register(newUser, req.body.password, function (err, user) {
+    const first_name = req.body.f_name;
+    const last_name = req.body.l_name;
+
+    const username = req.body.username;
+    const phone = req.body.phone;
+    const h_i_s = req.body.insurance_status;
+    const age = req.body.age;
+    const gender = req.body.gender;
+
+    if (err) {
+      req.flash("error", err.message);
+      console.log(err);
+      return res.redirect("/register");
+    }
+    passport.authenticate("local")(req, res, function () {
+      req.flash("success", "Welcome to Medi-Doc " + req.user.username);
+      const appoint = new Appointment({
+        username: req.user.username,
+        user_data: [],
+      });
+      appoint.save();
+
+      const newUser = new Item({
+        first_name: first_name,
+        last_name: last_name,
+        username: username,
+        phone: phone,
+        gender: gender,
+        h_i_s: h_i_s,
+        age: age,
+        Uid: username + phone,
+        blood_oxy: "not provided",
+        blood_press: "not provided",
+        sugar: "not provided",
+        thy: "not provided",
+        PSA: "not provided",
+
+        user_data: [],
+      });
+      newUser.save(function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.redirect("/profile/page2");
+        }
+      });
+    });
+  });
+});
+
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/profile/page1",
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
+  function (req, res) {
+    const usern = req.body.username;
+    console.log(error + success);
+    req.flash("success", "Logged in !! Successfully ");
+  }
+);
 
 ////*******Diagnose Routes**********////////////////////
-app.get("/diagnose", isLoggedIn, function (req, res) {
+/*app.get("/diagnose", isLoggedIn, function (req, res) {
   res.render("diagnose", { sym: Sym_options });
-});
+}); */
 
-app.get("/diagnose/result", function (req, res) {
+/* app.get("/diagnose/result", function (req, res) {
   res.render("diagnoseres");
 });
-
-app.post("/diagnose", function (req, res) {
+ */
+/* app.post("/diagnose", function (req, res) {
   const sym = [9];
   var gender = req.body.gender;
   const age = req.body.age;
@@ -155,76 +300,8 @@ app.post("/diagnose", function (req, res) {
         }
       );
     });
-});
-
-////////////////////register and login//////////////////////////
-
-app.post("/register", function (req, res) {
-  var newUser = new User({ username: req.body.username });
-
-  User.register(newUser, req.body.password, function (err, user) {
-    const first_name = req.body.f_name;
-    const last_name = req.body.l_name;
-
-    const username = req.body.username;
-    const phone = req.body.phone;
-    const h_i_s = req.body.insurance_status;
-    const age = req.body.age;
-    const gender = req.body.gender;
-
-    if (err) {
-      req.flash("error", err.message);
-      console.log(err);
-      return res.redirect("/register");
-    }
-    passport.authenticate("local")(req, res, function () {
-      req.flash("success", "Welcome to Medi-Doc " + user.username);
-      const newUser = new Item({
-        first_name: first_name,
-        last_name: last_name,
-        username: username,
-        phone: phone,
-        gender: gender,
-        h_i_s: h_i_s,
-        age: age,
-        Uid: username + phone,
-        blood_oxy: "not provided",
-        blood_press: "not provided",
-        sugar: "not provided",
-        thy: "not provided",
-        PSA: "not provided",
-        userdata: [],
-      });
-      newUser.save(function (err) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.redirect("/profile/page2");
-        }
-      });
-    });
-  });
-});
-
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/profile/page2",
-    failureRedirect: "/login",
-    failureFlash: true,
-  }),
-  function (req, res) {
-    const usern = req.body.username;
-    console.log(error + success);
-    req.flash("success", "Logged in !! Successfully ");
-  }
-);
-
+}); */
 ///////////****************////////
-
-
-
-// report generation route 
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
@@ -237,7 +314,7 @@ app.get("/demo", function (req, res) {
   res.render("demo");
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, function () {
   console.log("server started at 8000 port");

@@ -1,0 +1,44 @@
+<%- include('profileheader') %>
+<div class="main navside" style="margin-top: 4%; opacity: 0.94">
+  <div class="features-boxed">
+    <div class="container">
+      <div class="intro">
+        <h2 class="text-center">Appointment History</h2>
+      </div>
+      <div class="row justify-content-center features">
+        <% var i=0; elements.forEach(function(element){ %>
+        <div class="col-sm-6 col-md-5 col-lg-4 item">
+          <div class="bg-light border-success shadow-lg box">
+            <h3 class="name"><%= element.name %></h3>
+            <p class="description" style="text-align: left; margin: 10px 10px">
+              Name: <strong> <%= element.name %></strong>
+            </p>
+            <p class="description" style="text-align: left; margin: 10px 10px">
+              Contact: <strong><%= element.contact %> </strong>
+            </p>
+            <p class="description" style="text-align: left; margin: 10px 10px">
+              Date: <strong><%= element.date %></strong>
+            </p>
+            <p class="description" style="text-align: left; margin: 10px 10px">
+              Hospital: <strong><%= element.hospital %></strong>
+            </p>
+            <p class="description" style="text-align: left; margin: 10px 10px">
+              Speciality: <strong><%= element.speciality %></strong>
+            </p>
+
+            <p class="description" style="text-align: left; margin: 10px 10px">
+              Doctor: <strong><%= element.doctor %></strong>
+            </p>
+            <p class="description" style="text-align: left; margin: 10px 10px">
+              Appointment Number: <strong><%= element.no %></strong>
+            </p>
+            <a class="learn-more" href="#">Show Reciept »</a>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('footer') %>

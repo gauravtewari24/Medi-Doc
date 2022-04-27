@@ -1,4 +1,4 @@
-<%- include('bookingheader') %>
+<%- include('profileheader') %>
 <style>
   body {
   background-image: url("../images/img.jpg");
@@ -128,6 +128,7 @@
           class="border rounded shadow-sm form-control"
           id="city"
           required
+          name="city"
         >
           <option value="12" selected>Select the City</option>
         </select>
@@ -137,13 +138,14 @@
           class="border rounded shadow-sm form-control"
           id="med"
           size="1"
+          name="hospital"
           required
         >
           <option value="12" selected>Select the Hospital</option>
         </select>
       </div>
-      <div class="form-group">
-        <select class="border rounded shadow-sm form-control" required>
+      <div class="form-group" >
+        <select name="speciality" class="border rounded shadow-sm form-control" required>
           <option value="12" selected>Select the speciality</option>
           <option value="Cardiologist">Cardiologist</option>
           <option value="Dentist">Dentist</option>
@@ -160,11 +162,15 @@
         </select>
       </div>
       <div class="form-group">
-        <select class="border rounded shadow-sm form-control" required>
+        <select name="doc" class="border rounded shadow-sm form-control" required>
           <option value="12" selected>Select the Doctor</option>
           <option value="Cardiologist">Dr Shailesh Srivastava</option>
           <option value="Dentist">Dr. Arvind Kumar</option>
-          
+          <option value="Cardiologist">Dr ram trivedi</option>
+          <option value="Dentist">Dr. sanjay srivastava</option>
+          <option value="Cardiologist">Dr veer pratap</option>
+          <option value="Dentist">Dr. manoj bajpai</option>
+    
         </select>
       </div>
       <div class="form-group">
@@ -176,5 +182,5 @@
 
 </div> 
 
-  <%- include('./footer') %>
+  <!-- <%- include('./footer') %> -->
 

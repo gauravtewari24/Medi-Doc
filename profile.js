@@ -50,7 +50,7 @@ router.get("/page1", isLoggedIn, function (req, res) {
       console.log(err);
     } else {
       if (element.user_data.length === 0) {
-        console.log("bhag");
+        console.log("error");
         var obj = { pdf_no: "no entries found" };
         elements.push(obj);
         res.render("page1", { user: usern.username, elements: elements });
@@ -142,7 +142,7 @@ router.post("/func", isLoggedIn, function (req, res) {
           console.log(err);
         } else {
           if (element === null) {
-            console.log("BHAK");
+            console.log("error");
             res.redirect("/profile/page1");
           } else {
             for (i in element.user_data) {

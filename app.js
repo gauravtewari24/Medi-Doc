@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var path = require("path");
 const sendMail = require("./public/js/mail.js");
+var nodemailer = require("nodemailer");
 const hospital = require("./public/js/Hospitals/Lucknow");
 //const _ = require("lodash");
 const request = require("request");
@@ -37,13 +38,10 @@ app.use(methodOverride("_method"));
 app.use(flash());
 
 mongoose
-  .connect(
-    "mongodb://u7l8arllam84y5ujfhrv:KExrqmWn7xk4Z29bOtzW@buhu1tnk1zats5y-mongodb.services.clever-cloud.com:27017/buhu1tnk1zats5y",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect("mongodb+srv://rupam123:BphQsTzWPeQHPVpt@cluster0.oszuc.mongodb.net/Med-Doc", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connected to DB!"))
   .catch((error) => console.log(error.message));
 
@@ -67,11 +65,23 @@ app.use(function (req, res, next) {
   next();
 });
 
+// node mailer
+
+var transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "med.doc.india@gmail.com",
+    pass: "MEDIdoc@69#",
+  },
+});
+
+// node mailer
+
 app.use("/profile", profileRoutes);
 
-/* app.get("/chatbot", function (req, res) {
+app.get("/about us", function (req, res) {
   res.render("bot page");
-}); */
+});
 app.get("/", function (req, res) {
   res.render("index");
 });
@@ -111,20 +121,22 @@ app.post("/search_result", function (req, res) {
 ////////////////////************************////////////////////////// */
 
 app.post("/email", (req, res) => {
-  const { email, name, gender, contact, date } = req.body;
+  const { email, name, gender, contact, date, city, hospital, speciality, doc} = req.body;
   const usern = req.user;
   var last2 = contact.slice(-2);
   const new_item = {
     email,
     name,
-    hospital: "Nanavati Hospital",
-    speciality: "EYE",
-    doctor: "Dr Shailesh Srivastava",
+    hospital: hospital,
+    speciality: speciality,
+    doctor: doc,
     gender,
     contact,
     no: last2,
     date,
   };
+
+  console.log(city, hospital);
 
   Appointment.findOneAndUpdate(
     { username: usern.username },
@@ -139,21 +151,31 @@ app.post("/email", (req, res) => {
   );
 
   const text =
-    "Name : " +
-    name +
+    "Name : " + name +
     "\n" +
-    "hospital : Nanavati Hospital" +
+    "city : " + city +
     "\n" +
-    "Speciality: Eye" +
+    "hospital : " + hospital +
     "\n" +
-    "date: 27-10-2020";
-
-  sendMail(email, text, function (err, data) {
+    "Speciality: " + speciality +
+    "\n" +
+    "doctor : " + doc +
+    "\n" +
+    "date: " + date +
+    "\n\n\n" + 
+    + "Thank you for using our service. Your request has been sent to the hospital and you will be receiving a confirmation from the hospital soon";
+    
+  var mailOptions = {
+    from: "med.doc.india@gmail.com", 
+    to: email, 
+    subject: "appointment details about your recent request !!!",
+    text: text,
+  };
+  transporter.sendMail(mailOptions, (err, data) => {
     if (err) {
-      console.log("ERROR: ", err);
-      res.redirect("/profile/book");
+      console.log(err);
     } else {
-      console.log("Email sent!!!");
+      console.log("Email sent!!! to" + email);
       res.redirect("/profile/book");
     }
   });
@@ -240,7 +262,7 @@ app.post("/register", function (req, res) {
 app.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/profile/page1",
+    successRedirect: "/profile/page2",
     failureRedirect: "/login",
     failureFlash: true,
   }),

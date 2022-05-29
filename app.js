@@ -121,15 +121,15 @@ app.post("/search_result", function (req, res) {
 ////////////////////************************////////////////////////// */
 
 app.post("/email", (req, res) => {
-  const { email, name, gender, contact, date, city, hospital, speciality, doc} = req.body;
+  const { email, name, gender, contact, date, city, hospital, speciality, doctor} = req.body;
   const usern = req.user;
   var last2 = contact.slice(-2);
   const new_item = {
     email,
     name,
-    hospital: hospital,
-    speciality: speciality,
-    doctor: doc,
+    hospital : hospital,
+    speciality : speciality,
+    doctor : doctor,
     gender,
     contact,
     no: last2,
@@ -159,7 +159,7 @@ app.post("/email", (req, res) => {
     "\n" +
     "Speciality: " + speciality +
     "\n" +
-    "doctor : " + doc +
+    "doctor : " + doctor +
     "\n" +
     "date: " + date +
     "\n\n\n" + 
@@ -175,7 +175,7 @@ app.post("/email", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Email sent!!! to" + email);
+      console.log("Email sent!!! to" + email + doctor + speciality);
       res.redirect("/profile/book");
     }
   });

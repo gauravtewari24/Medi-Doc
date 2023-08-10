@@ -38,7 +38,7 @@ app.use(methodOverride("_method"));
 app.use(flash());
 
 mongoose
-  .connect("mongodb+srv://rupam123:BphQsTzWPeQHPVpt@cluster0.oszuc.mongodb.net/Med-Doc", {
+  .connect("mongodb+srv://gaurav24:mongodb@123@cluster0.i7kjjdy.mongodb.net/c", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
